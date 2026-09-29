@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Pakistan Stories"
+description = "A faithful vanilla HTML, CSS, and JavaScript rebuild of the Pakistan Stories archive website, preserving its editorial browsing experience and responsive layout."
+version = "1.0.0"
+id = "artifacts/pakistan-stories-vanilla"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 19145
+
+[services.development]
+run = "pnpm --filter @workspace/pakistan-stories-vanilla run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/pakistan-stories-vanilla", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/pakistan-stories-vanilla/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "19145"
+BASE_PATH = "/"
